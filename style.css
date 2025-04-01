@@ -1,0 +1,228 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-image: url('fondo.jpg'); /* Ruta relativa a la carpeta "fondo" */
+  background-size: cover; /* Hace que la imagen cubra todo el fondo */
+  background-position: center center; /* Centra la imagen en la pantalla */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-attachment: fixed; /* Hace que la imagen no se desplace al hacer scroll */
+}
+
+.start-screen,
+.score-container {  
+  background-color: #ffffff;
+  padding: 3.1em 1.8em;
+  width: 80%;
+  max-width: 37.5em;
+  margin: 0 auto;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 0.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 6px 20px rgba(0, 0, 0, 0.2);
+  background-color: #ecf6bb; /* Color suave para el fondo */
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#start-button,
+#restart {
+  font-size: 1.3em;
+  padding: 0.5em 1.8em;
+  border-radius: 0.2em;
+  background-color: #fa2e59; /* Color primario */
+  color: #ffffff;
+}
+
+#start-button:hover,
+#restart:hover {
+  background-color: #76bcad; /* Hover suave */
+}
+
+#restart {
+  margin-top: 0.9em;
+  align-self: center;
+}
+
+#display-container {
+  background-color: #ffffff;
+  padding: 3.1em 1.8em;
+  width: 80%;
+  max-width: 37.5em;
+  margin: 0 auto;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 0.6em;
+  box-shadow: 3px 6px 20px rgba(0, 0, 0, 0.2);
+  background-color: #ecf6bb;
+}
+
+.header {
+  margin-bottom: 1.8em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.6em;
+  border-bottom: 0.15em solid #76bcad; /* Color verde suave */
+}
+
+.timer-div {
+  background-color: #beeaff;
+  width: 7.5em;
+  border-radius: 1.8em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7em 1.8em;
+  background-color: #ff703f; /* Color secundario */
+}
+
+.question {
+  margin-bottom: 1.25em;
+  font-weight: 600;
+  color: #fa2e59; /* Color primario */
+}
+
+.option-div {
+  font-size: 0.9em;
+  width: 100%;
+  padding: 1em;
+  margin: 0.3em 0;
+  text-align: left;
+  outline: none;
+  background: transparent;
+  border: 1px solid #c0bfd2;
+  border-radius: 0.3em;
+  transition: all 0.3s ease;
+}
+
+.option-div:disabled {
+  color: #000000;
+  cursor: not-allowed;
+}
+
+#next-button {
+  font-size: 1em;
+  margin-top: 1.5em;
+  background-color: #fa2e59; /* Color primario */
+  color: #ffffff;
+  font-size: 1.3em;
+  padding: 0.5em 1.8em;
+  border-radius: 0.2em;
+  display: block; /* Asegura que el botón se comporte como un elemento de bloque */
+  margin-left: auto; /* Empuja el botón al centro */
+  margin-right: auto; /* Empuja el botón al centro */
+  transition: background-color 0.3s ease;
+}
+
+#next-button:hover {
+  background-color: #76bcad; /* Hover suave */
+}
+
+.hide {
+  display: none;
+}
+
+.incorrect {
+  background-color: #ffdde0;
+  color: #d32f2f;
+  border-color: #d32f2f;
+}
+
+.correct {
+  background-color: #e7f6d5;
+  color: #689f38;
+  border-color: #689f38;
+}
+
+#user-score {
+  font-size: 1.5em;
+  color: #000000;
+}
+
+.feedback-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Asegúrate de que se muestre sobre otros elementos */
+  background-color: rgba(218, 143, 143, 0.5); /* Fondo semitransparente */
+}
+
+.feedback-container img {
+  width: 70%;  /* Ajusta el tamaño de la imagen al 60% del ancho de la pantalla */
+  height: auto;
+  max-width: 700px; /* Tamaño máximo de la imagen */
+  animation: fadeInOut 10s forwards; /* Anima la aparición y desaparición */
+}
+
+/* Animación de desvanecimiento */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .feedback-container img {
+    width: 80%;  /* En pantallas más pequeñas, hacemos la imagen más grande (80%) */
+  }
+}
+
+@media (max-width: 480px) {
+  .feedback-container img {
+    width: 90%;  /* En pantallas aún más pequeñas (móviles), la imagen ocupará el 90% del ancho */
+  }
+}
+/* Logo styles */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  max-width: 300px;  /* Ajusta el tamaño máximo del logo */
+  height: auto;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .logo {
+    max-width: 150px;  /* Hace el logo más pequeño en pantallas más pequeñas */
+  }
+
+  .logo-container {
+    margin-bottom: 10px;  /* Menos espacio debajo del logo en pantallas pequeñas */
+  }
+}
