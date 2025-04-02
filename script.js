@@ -40,7 +40,7 @@ const quizArray = [
     id: "3",
     question: "¿Nuestros insumos son de procedencia?",
     options: ["Chinos", "Nueva Zelanda y brasilero", "Peruanos", "Venezolanos"],
-    correct: "Peruanos",
+    correct: "Nueva Zelanda y brasilero",
   },
   {
     id: "4",
@@ -52,12 +52,12 @@ const quizArray = [
     id: "5",
     question: "¿Cuál es la Primera Botica en desarrollar Fórmulas Magistrales en el Perú?",
     options: [
-      "Grobdi",
-      "Grobdi",
-      "Grobdi",
-      "Grobdi",
+      "GROBDI",
+      "GRODBI",
+      "GROCDI",
+      "GRODDI",
     ],
-    correct: "Grobdi",
+    correct: "GROBDI",
   },
   {
     id: "6",
@@ -271,3 +271,43 @@ window.onload = () => {
   startScreen.classList.remove("hide");
   displayContainer.classList.add("hide");
 };
+
+//sonido hover al pasar el mouse o touch
+// Variables para los sonidos
+let hoverSound, clickSound;
+let soundsEnabled = false; // Bloquea los sonidos hasta que el usuario interactúe
+
+// Esperar el primer clic o toque para habilitar los sonidos
+document.addEventListener("click", enableSounds, { once: true });
+document.addEventListener("touchstart", enableSounds, { once: true });
+
+function enableSounds() {
+  hoverSound = new Audio("hover.mp3");
+  clickSound = new Audio("click.mp3");
+  soundsEnabled = true;
+}
+
+// Función para reproducir sonido sin bloqueos
+function playSound(sound) {
+  if (!soundsEnabled) return; // Si el usuario no ha interactuado, no reproducir
+  sound.currentTime = 0; // Reinicia el audio para que suene desde el inicio
+  sound.play().catch((error) => console.warn("Error reproduciendo sonido:", error));
+}
+
+// Añadir eventos a los botones principales (start, next, restart)
+[startButton, nextBtn, restart].forEach((btn) => {
+  btn.addEventListener("click", () => playSound(hoverSound)); // Sonido solo al presionar
+});
+
+// Añadir eventos a las opciones de respuesta
+document.addEventListener("mouseover", (event) => {
+  if (event.target.classList.contains("option-div")) {
+    playSound(clickSound);
+  }
+});
+
+document.addEventListener("touchstart", (event) => {
+  if (event.target.classList.contains("option-div")) {
+    playSound(clickSound);
+  }
+});

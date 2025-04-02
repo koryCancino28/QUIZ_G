@@ -15,7 +15,7 @@ body {
 .start-screen,
 .score-container {  
   background-color: #ffffff;
-  padding: 3.1em 1.8em;
+  padding: 1.1em 1.8em;
   width: 80%;
   max-width: 37.5em;
   margin: 0 auto;
@@ -60,7 +60,7 @@ button {
 
 #display-container {
   background-color: #ffffff;
-  padding: 3.1em 1.8em;
+  padding: 2.1em 1.8em;
   width: 80%;
   max-width: 37.5em;
   margin: 0 auto;
@@ -119,6 +119,11 @@ button {
 .option-div:disabled {
   color: #000000;
   cursor: not-allowed;
+}
+
+.option-div:not(:disabled):hover, 
+.option-div:not(:disabled):active {
+  background-color: #98d4c7; /* Hover suave - solo aplica cuando NO está disabled */
 }
 
 #next-button {
@@ -208,24 +213,32 @@ button {
   }
 }
 /* Logo styles */
-.logo-container {
+.logo-container{
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.logo {
+.logo{
   max-width: 300px;  /* Ajusta el tamaño máximo del logo */
   height: auto;
 }
 
+.logo-monstro{
+  max-width: 400px;  /* Ajusta el tamaño máximo del logo */
+  height: auto;
+}
+
+
 /* Responsive styles */
 @media (max-width: 768px) {
-  .logo {
-    max-width: 150px;  /* Hace el logo más pequeño en pantallas más pequeñas */
+  .logo, .logo-monstro {
+    max-width: 250px;  /* Hace el logo más pequeño en pantallas más pequeñas */
   }
-
+   .logo-monstro {
+    max-width: 300px;  
+  }
   .logo-container {
     margin-bottom: 10px;  /* Menos espacio debajo del logo en pantallas pequeñas */
   }
