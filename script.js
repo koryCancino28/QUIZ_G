@@ -173,24 +173,34 @@ function quizCreator() {
 //Checker Function to check if option is correct or not
 function checker(userOption) {
   let userSolution = userOption.innerText;
-  let question =
-    document.getElementsByClassName("container-mid")[questionCount];
+  let question = document.getElementsByClassName("container-mid")[questionCount];
   let options = question.querySelectorAll(".option-div");
 
-  // Crear un contenedor para mostrar el gif de feedback
+  // Crear un contenedor para mostrar los gifs de feedback
   let feedbackContainer = document.createElement("div");
   feedbackContainer.classList.add("feedback-container");
 
-  // Si la respuesta es correcta
   if (userSolution === quizArray[questionCount].correct) {
     userOption.classList.add("correct");
     scoreCount++;
 
+    // Reproducir sonido de aplausos
+    let applauseSound = new Audio("aplauso.mp3"); 
+    applauseSound.play();
+
     // Mostrar el gif de respuesta correcta
     let correctImage = document.createElement("img");
-    correctImage.src = "correcto.gif";  // Asegúrate de que la ruta sea correcta
+    correctImage.src = "correcto.gif";  
     correctImage.alt = "Respuesta Correcta";
     feedbackContainer.appendChild(correctImage);
+
+    // Mostrar el gif de confeti cuando la respuesta es correcta
+    let confettiImage = document.createElement("img");
+    confettiImage.src = "confeti.gif"; 
+    confettiImage.alt = "Confeti Celebración";
+    confettiImage.classList.add("confetti");
+    feedbackContainer.appendChild(confettiImage);
+
   } else {
     userOption.classList.add("incorrect");
 
@@ -201,11 +211,22 @@ function checker(userOption) {
       }
     });
 
+    // Reproducir sonido de aplausos
+    let applauseSound = new Audio("derrota.mp3"); 
+    applauseSound.play();
+
     // Mostrar el gif de respuesta incorrecta
     let incorrectImage = document.createElement("img");
-    incorrectImage.src = "incorrecto.gif";  // Asegúrate de que la ruta sea correcta
+    incorrectImage.src = "incorrecto.gif";  
     incorrectImage.alt = "Respuesta Incorrecta";
     feedbackContainer.appendChild(incorrectImage);
+
+    // Mostrar el gif adicional "triste"
+    let sadImage = document.createElement("img");
+    sadImage.src = "triste.gif";  
+    sadImage.alt = "Imagen Triste";
+    sadImage.classList.add("sad");
+    feedbackContainer.appendChild(sadImage);
   }
 
   // Agregar el contenedor de feedback al DOM
@@ -219,11 +240,12 @@ function checker(userOption) {
     element.disabled = true;
   });
 
-  // Eliminar el feedback después de 10 segundos
+  // Eliminar el feedback después de 5 segundos
   setTimeout(() => {
     feedbackContainer.remove();
-  }, 5000);  // 1 segundo
+  }, 5000);
 }
+
 
 //initial setup
 function initial() {

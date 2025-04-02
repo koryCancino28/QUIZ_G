@@ -95,8 +95,12 @@ button {
 
 .question {
   margin-bottom: 1.25em;
-  font-weight: 600;
   color: #fa2e59; /* Color primario */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700; /* Negrita */
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .option-div {
@@ -107,7 +111,7 @@ button {
   text-align: left;
   outline: none;
   background: transparent;
-  border: 1px solid #c0bfd2;
+  border: 1px solid #d2bfbf;
   border-radius: 0.3em;
   transition: all 0.3s ease;
 }
@@ -208,7 +212,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .logo {
@@ -225,4 +229,25 @@ button {
   .logo-container {
     margin-bottom: 10px;  /* Menos espacio debajo del logo en pantallas pequeñas */
   }
+}
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px; /* Ajusta el tamaño según sea necesario */
+  animation: fadeOut 5s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.sad {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px; /* Ajusta el tamaño según sea necesario */
+  animation: fadeOut 5s ease-in-out forwards;
 }
