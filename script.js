@@ -6,6 +6,7 @@ let countOfQuestion = document.querySelector(".number-of-question");
 let displayContainer = document.getElementById("display-container");
 let scoreContainer = document.querySelector(".score-container");
 let restart = document.getElementById("restart");
+let participante = document.getElementById("participante");
 let userScore = document.getElementById("user-score");
 let startScreen = document.querySelector(".start-screen");
 let startButton = document.getElementById("start-button");
@@ -13,6 +14,10 @@ let questionCount;
 let scoreCount = 0;
 let count = 11; //EL INTERVALO DE TIEMPO, CAMBIAR EN LOS OTROS COUNT
 let countdown;
+let progressBar = document.querySelector(".progress-bar");
+let streakCounter = document.querySelector(".streak-counter");
+let currentStreak = 0;
+let maxStreak = 0;
 
 
 //Questions and Options array
@@ -68,8 +73,8 @@ const quizArray = [
   {
     id: "7",
     question: "¿Que característica tiene nuestro Omega?",
-    options: ["Origen Animal", "EPA y DHA", "Anchoveta,microencapsulado + EPA y DHA", "Origen Vegetal"],
-    correct: "Anchoveta,microencapsulado + EPA y DHA",
+    options: ["Origen Animal", "EPA y DHA", "Anchoveta, microencapsulado + EPA y DHA", "Origen Vegetal"],
+    correct: "Anchoveta, microencapsulado + EPA y DHA",
   },
   {
     id: "8",
@@ -83,12 +88,29 @@ const quizArray = [
     correct: "1 año",
   },
 ];
+// volver al inicio
+participante.addEventListener("click", () => {
+  if (soundsEnabled) {
+    let sound = new Audio("hover.mp3");
+    sound.play();
+  }
+  // oculta los contenedores de quiz y puntuación
+  displayContainer.classList.add("hide");
+  scoreContainer.classList.add("hide");
+  
+  // muestra la pantalla de inicio
+  startScreen.classList.remove("hide");
+  
+  // reinicia el quiz para limpiar datos
+  initial(); //resetea preguntas/puntaje
+});
 
 //Restart Quiz
 restart.addEventListener("click", () => {
   initial();
   displayContainer.classList.remove("hide");
   scoreContainer.classList.add("hide");
+  updateProgress();
 });
 
 //Next Button
@@ -104,7 +126,22 @@ nextBtn.addEventListener(
       scoreContainer.classList.remove("hide");
       //user score
       userScore.innerHTML =
-        "Tu puntuación es " + scoreCount + " de " + questionCount;
+        `<div class="score-value">🏆 Tu puntuación: <span>${scoreCount}</span>/${questionCount}</div>`;
+        if (scoreCount > 0) {
+          userScore.innerHTML = `
+    <div class="score-value">🏆 Tu puntuación: <span>${scoreCount}</span>/${questionCount}</div>
+    <div class="streak-value">🔥 Racha máxima: <strong>${maxStreak}</strong></div>
+    ${scoreCount === quizArray.length ? 
+        '<div class="feedback-perfect">🎉 ¡Perfecto! Dominaste el tema</div>' : 
+        scoreCount >= quizArray.length/2 ? 
+        '<div class="feedback-good">👍 ¡Buen trabajo!</div>' : 
+        '<div class="feedback-keep">💪 Sigue practicando</div>'
+    }
+`;
+      } else {
+          userScore.innerHTML += `<div class="streak-value">🔥 No hubo racha de respuestas correctas`;
+      }
+      
     } else {
       //display questionCount
       countOfQuestion.innerHTML =
@@ -114,6 +151,7 @@ nextBtn.addEventListener(
       count = 11;
       clearInterval(countdown);
       timerDisplay();
+      updateProgress();
     }
   })
 ); 
@@ -180,29 +218,41 @@ function checker(userOption) {
   let feedbackContainer = document.createElement("div");
   feedbackContainer.classList.add("feedback-container");
 
+  let feedbackTime; // Variable para definir el tiempo de eliminación
+
   if (userSolution === quizArray[questionCount].correct) {
     userOption.classList.add("correct");
     scoreCount++;
+    currentStreak++;
+    if (currentStreak > maxStreak) {
+      maxStreak = currentStreak;
+    }
+
+    streakCounter.textContent = `Racha: ${currentStreak}`;
 
     // Reproducir sonido de aplausos
-    let applauseSound = new Audio("aplauso.mp3"); 
+    let applauseSound = new Audio("aplauso.mp3");
     applauseSound.play();
 
     // Mostrar el gif de respuesta correcta
     let correctImage = document.createElement("img");
-    correctImage.src = "correcto.gif";  
+    correctImage.src = "correcto.gif";
     correctImage.alt = "Respuesta Correcta";
     feedbackContainer.appendChild(correctImage);
 
     // Mostrar el gif de confeti cuando la respuesta es correcta
     let confettiImage = document.createElement("img");
-    confettiImage.src = "confeti.gif"; 
+    confettiImage.src = "confeti.gif";
     confettiImage.alt = "Confeti Celebración";
     confettiImage.classList.add("confetti");
     feedbackContainer.appendChild(confettiImage);
 
+    feedbackTime = 5000; // Tiempo de feedback correcto (5s)
+
   } else {
     userOption.classList.add("incorrect");
+    currentStreak = 0;
+    streakCounter.textContent = "Racha: 0";
 
     // Para marcar la opción correcta
     options.forEach((element) => {
@@ -211,39 +261,34 @@ function checker(userOption) {
       }
     });
 
-    // Reproducir sonido de aplausos
-    let applauseSound = new Audio("derrota.mp3"); 
-    applauseSound.play();
+    // Reproducir sonido de derrota
+    let defeatSound = new Audio("derrota.mp3");
+    defeatSound.play();
 
     // Mostrar el gif de respuesta incorrecta
     let incorrectImage = document.createElement("img");
-    incorrectImage.src = "incorrecto.gif";  
+    incorrectImage.src = "incorrecto.gif";
     incorrectImage.alt = "Respuesta Incorrecta";
     feedbackContainer.appendChild(incorrectImage);
 
-    // Mostrar el gif adicional "triste"
     let sadImage = document.createElement("img");
-    sadImage.src = "triste.gif";  
+    sadImage.src = "triste.gif";
     sadImage.alt = "Imagen Triste";
     sadImage.classList.add("sad");
     feedbackContainer.appendChild(sadImage);
+
+    feedbackTime = 3500; //incorrecto (3s)
   }
-
-  // Agregar el contenedor de feedback al DOM
   question.appendChild(feedbackContainer);
-
   // Limpiar el intervalo (detener el temporizador)
   clearInterval(countdown);
-
-  // Deshabilitar todas las opciones
   options.forEach((element) => {
     element.disabled = true;
   });
-
-  // Eliminar el feedback después de 5 segundos
+// Eliminar el feedback después del tiempo correspondiente
   setTimeout(() => {
     feedbackContainer.remove();
-  }, 5000);
+  }, feedbackTime);
 }
 
 
@@ -253,17 +298,34 @@ function initial() {
   questionCount = 0;
   scoreCount = 0;
   count = 11;
+  currentStreak = 0; //reiniciar el contador de racha
+  maxStreak = 0; //reiniciar la racha máxima
   clearInterval(countdown);
   timerDisplay();
   quizCreator();
   quizDisplay(questionCount);
+  progressBar.style.width = "0%";
+  streakCounter.textContent = "Racha: 0";
+  streakCounter.style.left = "0%";
 }
+
+function updateProgress() {
+  const progress = (questionCount / quizArray.length) * 100;
+  progressBar.style.width = `${progress}%`;
+  streakCounter.style.left = `${progress}%`;
+}
+
 
 //when user click on start button
 startButton.addEventListener("click", () => {
+  if (soundsEnabled) {
+    let sound = new Audio("hover.mp3");
+    sound.play();
+  }
   startScreen.classList.add("hide");
   displayContainer.classList.remove("hide");
   initial();
+  updateProgress();
 });
 
 //hide quiz and display start screen
@@ -295,18 +357,12 @@ function playSound(sound) {
 }
 
 // Añadir eventos a los botones principales (start, next, restart)
-[startButton, nextBtn, restart].forEach((btn) => {
+[nextBtn, restart].forEach((btn) => {
   btn.addEventListener("click", () => playSound(hoverSound)); // Sonido solo al presionar
 });
 
 // Añadir eventos a las opciones de respuesta
 document.addEventListener("mouseover", (event) => {
-  if (event.target.classList.contains("option-div")) {
-    playSound(clickSound);
-  }
-});
-
-document.addEventListener("touchstart", (event) => {
   if (event.target.classList.contains("option-div")) {
     playSound(clickSound);
   }

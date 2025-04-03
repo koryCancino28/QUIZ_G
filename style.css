@@ -5,7 +5,7 @@
   font-family: "Poppins", sans-serif;
 }
 body {
-  background-image: url('fondo.jpg'); /* Ruta relativa a la carpeta "fondo" */
+  background-image: url('fondo.png'); /* Ruta relativa a la carpeta "fondo" */
   background-size: cover; /* Hace que la imagen cubra todo el fondo */
   background-position: center center; /* Centra la imagen en la pantalla */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -40,7 +40,8 @@ button {
 }
 
 #start-button,
-#restart {
+#restart,
+#participante {
   font-size: 1.3em;
   padding: 0.5em 1.8em;
   border-radius: 0.2em;
@@ -49,11 +50,14 @@ button {
 }
 
 #start-button:hover,
-#restart:hover {
+#restart:hover,
+#participante:hover {
   background-color: #76bcad; /* Hover suave */
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
 }
 
-#restart {
+#restart, #participante {
   margin-top: 0.9em;
   align-self: center;
 }
@@ -74,7 +78,7 @@ button {
 }
 
 .header {
-  margin-bottom: 1.8em;
+  margin-bottom: 1.0em;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -123,6 +127,7 @@ button {
 
 .option-div:not(:disabled):hover, 
 .option-div:not(:disabled):active {
+  transform: translateY(-3px);
   background-color: #98d4c7; /* Hover suave - solo aplica cuando NO está disabled */
 }
 
@@ -142,6 +147,8 @@ button {
 
 #next-button:hover {
   background-color: #76bcad; /* Hover suave */
+  transition: all 0.3s ease;
+  transform: translateY(-3px);
 }
 
 .hide {
@@ -179,9 +186,9 @@ button {
 }
 
 .feedback-container img {
-  width: 70%;  /* Ajusta el tamaño de la imagen al 60% del ancho de la pantalla */
+  width: 60%;  /* Ajusta el tamaño de la imagen al 60% del ancho de la pantalla */
   height: auto;
-  max-width: 700px; /* Tamaño máximo de la imagen */
+  max-width: 800px; /* Tamaño máximo de la imagen */
   animation: fadeInOut 10s forwards; /* Anima la aparición y desaparición */
 }
 
@@ -203,13 +210,13 @@ button {
 
 @media (max-width: 768px) {
   .feedback-container img {
-    width: 80%;  /* En pantallas más pequeñas, hacemos la imagen más grande (80%) */
+    width: 70%;  /* En pantallas más pequeñas, hacemos la imagen más grande (80%) */
   }
 }
 
 @media (max-width: 480px) {
   .feedback-container img {
-    width: 90%;  /* En pantallas aún más pequeñas (móviles), la imagen ocupará el 90% del ancho */
+    width: 80%;  /* En pantallas aún más pequeñas (móviles), la imagen ocupará el 90% del ancho */
   }
 }
 /* Logo styles */
@@ -229,11 +236,14 @@ button {
   max-width: 400px;  /* Ajusta el tamaño máximo del logo */
   height: auto;
 }
-
+.logo-morado{
+  max-width: 200px;  /* Ajusta el tamaño máximo del logo */
+  height: auto;
+}
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  .logo, .logo-monstro {
+  .logo, .logo-monstro{
     max-width: 250px;  /* Hace el logo más pequeño en pantallas más pequeñas */
   }
    .logo-monstro {
@@ -263,4 +273,140 @@ button {
   transform: translateX(-50%);
   width: 150px; /* Ajusta el tamaño según sea necesario */
   animation: fadeOut 5s ease-in-out forwards;
+}
+/* Añade estos estilos adaptados a tu tema */
+.progress-container {
+  width: 90%;
+  height: 15px;
+  background: #e9ecef;
+  border-radius: 10px;
+  margin: 1.8em auto;
+  position: relative;
+  overflow: visible;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #fa2e59, #ff703f); /* Usando tus colores primario y secundario */
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.5s ease;
+  box-shadow: 0 2px 5px rgba(250, 46, 89, 0.3); /* Sombra con color primario */
+}
+
+.streak-counter {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  background: #76bcad; /* Usando tu color de hover */
+  color: white;
+  padding: 3px 12px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  box-shadow: 0 3px 6px rgba(118, 188, 173, 0.3); /* Sombra con color de hover */
+  transform: translateX(-50%);
+  transition: left 0.5s ease;
+  z-index: 2;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Animación para destacar cuando aumenta la racha */
+@keyframes streakPulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.streak-increase {
+  animation: streakPulse 0.5s ease;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .progress-container {
+    width: 95%;
+    height: 12px;
+    margin: 1.2em auto;
+  }
+  
+  .streak-counter {
+    top: -22px;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+  }
+}
+
+/* Ajustes para móviles muy pequeños */
+@media (max-width: 480px) {
+  .progress-container {
+    height: 10px;
+    margin: 1em auto;
+  }
+  
+  .streak-counter {
+    top: -20px;
+    font-size: 0.6rem;
+  }
+}
+
+/* Estilos para el contenedor de puntuación----------------------------------------- */
+#user-score {
+  font-size: clamp(1.1em, 3vw, 1.4em); /* Responsive font size */
+  text-align: center;
+  padding: 1em;
+  margin: 0.8em auto; /* Centered with auto margins */
+  border-radius: 0.6em;
+  background-color: #ecf6bb;
+  border: 2px solid #76bcad;
+  box-shadow: 0 4px 8px rgba(118, 188, 173, 0.2);
+  line-height: 1.5;
+  width: 90%; /* Responsive width */
+  max-width: 100%; /* Never exceeds parent container */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.score-value {
+  color: #fa2e59;
+  font-weight: 700;
+  font-size: clamp(1.1em, 3.5vw, 1.3em);
+  display: inline-block;
+  transition: transform 0.3s ease;
+
+}
+
+.streak-value {
+  color: #ff703f;
+  font-style: italic;
+}
+
+.feedback-perfect {
+  color: #689f38;
+  margin-top: 0.8em;
+}
+
+.feedback-good {
+  color: #fa2e59;
+  margin-top: 0.8em;
+}
+
+.feedback-keep {
+  color: #76bcad;
+  margin-top: 0.8em;
+}
+
+#user-score.perfect-score {
+  background: linear-gradient(135deg, #ecf6bb 0%, #d4edda 100%);
+  border: 2px solid #689f38;
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
 }
