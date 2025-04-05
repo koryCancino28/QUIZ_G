@@ -18,7 +18,9 @@ let progressBar = document.querySelector(".progress-bar");
 let streakCounter = document.querySelector(".streak-counter");
 let currentStreak = 0;
 let maxStreak = 0;
-
+// Variables para los sonidos
+let hoverSound, clickSound;
+let soundsEnabled = false; // Bloquea los sonidos hasta que el usuario interactúe
 
 //Questions and Options array
 
@@ -94,15 +96,27 @@ participante.addEventListener("click", () => {
     let sound = new Audio("hover.mp3");
     sound.play();
   }
-  // oculta los contenedores de quiz y puntuación
+  
+  // Detener el temporizador y su sonido
+  clearInterval(countdown);
+  if (timerSound) {
+    timerSound.pause();
+    timerSound.currentTime = 0;
+  }
+  // Ocultar contenedores y mostrar pantalla de inicio
   displayContainer.classList.add("hide");
   scoreContainer.classList.add("hide");
-  
-  // muestra la pantalla de inicio
   startScreen.classList.remove("hide");
   
-  // reinicia el quiz para limpiar datos
-  initial(); //resetea preguntas/puntaje
+  // Reiniciar el estado del quiz (sin iniciar el temporizador)
+  questionCount = 0;
+  scoreCount = 0;
+  count = 11;
+  currentStreak = 0;
+  maxStreak = 0;
+  timeLeft.innerHTML = ""; // Limpiar el texto del temporizador
+  progressBar.style.width = "0%";
+  streakCounter.textContent = "Racha: 0";
 });
 
 //Restart Quiz
@@ -124,22 +138,31 @@ nextBtn.addEventListener(
       //hide question container and display score
       displayContainer.classList.add("hide");
       scoreContainer.classList.remove("hide");
+      // Detener el temporizador y su sonido
+      clearInterval(countdown);
+      if (timerSound) {
+        timerSound.pause();
+        timerSound.currentTime = 0;
+      }
+      // Reproducir sonido de logro
+      if (soundsEnabled) {
+        let achievementSound = new Audio("logro.mp3");
+        achievementSound.play();}
       //user score
       userScore.innerHTML =
-        `<div class="score-value">🏆 Tu puntuación: <span>${scoreCount}</span>/${questionCount}</div>`;
-        if (scoreCount > 0) {
-          userScore.innerHTML = `
-    <div class="score-value">🏆 Tu puntuación: <span>${scoreCount}</span>/${questionCount}</div>
-    <div class="streak-value">🔥 Racha máxima: <strong>${maxStreak}</strong></div>
-    ${scoreCount === quizArray.length ? 
-        '<div class="feedback-perfect">🎉 ¡Perfecto! Dominaste el tema</div>' : 
-        scoreCount >= quizArray.length/2 ? 
-        '<div class="feedback-good">👍 ¡Buen trabajo!</div>' : 
-        '<div class="feedback-keep">💪 Sigue practicando</div>'
-    }
-`;
+          `<div class="score-value">🏆 Tu puntuación: <span>${scoreCount}</span>/${questionCount}</div>`;
+          if (scoreCount > 0) {
+            userScore.innerHTML = `
+      <div class="score-value">🏆 Tu puntuación: <span>${scoreCount}</span>/${questionCount}</div>
+      <div class="streak-value">🔥 Racha máxima: <strong>${maxStreak}</strong></div>
+      ${scoreCount === quizArray.length ? 
+          '<div class="feedback-perfect">🎉 ¡Perfecto! Dominaste el tema</div>' : 
+          scoreCount >= quizArray.length/2 ? 
+          '<div class="feedback-good">👍 ¡Buen trabajo!</div>' : 
+          '<div class="feedback-keep">💪 Sigue practicando</div>'
+      }`;
       } else {
-          userScore.innerHTML += `<div class="streak-value">🔥 No hubo racha de respuestas correctas`;
+          userScore.innerHTML += `<div class="streak-value2">❄️ No hubo racha de respuestas correctas ❄️`;
       }
       
     } else {
@@ -156,8 +179,18 @@ nextBtn.addEventListener(
   })
 ); 
 
+ // Reproducir sonido de aplausos
+ let timerSound = new Audio("temporizador.mp3");
+ timerSound.play();
+
 //Timer
 const timerDisplay = () => {
+  // Detener cualquier sonido de temporizador previo
+  if (timerSound) {
+    timerSound.pause();
+    timerSound.currentTime = 0;
+}
+
   countdown = setInterval(() => {
     count--;
     timeLeft.innerHTML = `${count}s`;
@@ -165,6 +198,24 @@ const timerDisplay = () => {
       clearInterval(countdown);
       displayNext();
     }
+    // Efecto de urgencia cuando quedan 5 segundos
+    if (count <= 5) {
+      timeLeft.style.animation = "pulse 0.5s infinite";
+      playSound(timerSound);
+  } else {
+      timeLeft.style.animation = "";
+  }
+  
+  if (count == 0) {
+      clearInterval(countdown);
+      timeLeft.style.animation = "";
+      // Detener el sonido del temporizador al cambiar de pregunta
+      if (timerSound) {
+          timerSound.pause();
+          timerSound.currentTime = 0;
+      }
+      displayNext();
+  }
   }, 1000);
 };
 
@@ -214,6 +265,12 @@ function checker(userOption) {
   let question = document.getElementsByClassName("container-mid")[questionCount];
   let options = question.querySelectorAll(".option-div");
 
+   // Detener el sonido del temporizador
+   if (timerSound) {
+        timerSound.pause();
+        timerSound.currentTime = 0;
+    }
+    
   // Crear un contenedor para mostrar los gifs de feedback
   let feedbackContainer = document.createElement("div");
   feedbackContainer.classList.add("feedback-container");
@@ -334,11 +391,6 @@ window.onload = () => {
   displayContainer.classList.add("hide");
 };
 
-//sonido hover al pasar el mouse o touch
-// Variables para los sonidos
-let hoverSound, clickSound;
-let soundsEnabled = false; // Bloquea los sonidos hasta que el usuario interactúe
-
 // Esperar el primer clic o toque para habilitar los sonidos
 document.addEventListener("click", enableSounds, { once: true });
 document.addEventListener("touchstart", enableSounds, { once: true });
@@ -346,6 +398,7 @@ document.addEventListener("touchstart", enableSounds, { once: true });
 function enableSounds() {
   hoverSound = new Audio("hover.mp3");
   clickSound = new Audio("click.mp3");
+  timerSound = new Audio("temporizador.mp3");
   soundsEnabled = true;
 }
 

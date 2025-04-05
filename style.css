@@ -239,8 +239,14 @@ button {
 .logo-morado{
   max-width: 200px;  /* Ajusta el tamaño máximo del logo */
   height: auto;
+  position: absolute;
+  top: 10px;
+  z-index: 0; /*el logo morado estará atrás del gif*/
 }
-
+.final{
+  max-width: 100%;  /* Ajusta el tamaño máximo del logo */
+  z-index: 1;/*el gif estará atrás del logo*/
+}
 /* Responsive styles */
 @media (max-width: 768px) {
   .logo, .logo-monstro{
@@ -382,6 +388,11 @@ button {
 
 .streak-value {
   color: #ff703f;
+  font-style: italic;
+}
+
+.streak-value2 {
+  color: #25afff;
   font-style: italic;
 }
 
