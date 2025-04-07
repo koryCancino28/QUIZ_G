@@ -10,6 +10,7 @@ body {
   background-position: center center; /* Centra la imagen en la pantalla */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
   background-attachment: fixed; /* Hace que la imagen no se desplace al hacer scroll */
+  user-select: none; /* Estándar */
 }
 
 .start-screen,
