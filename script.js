@@ -21,6 +21,7 @@ let maxStreak = 0;
 // Variables para los sonidos
 let hoverSound, clickSound;
 let soundsEnabled = false; // Bloquea los sonidos hasta que el usuario interactúe
+let questionAnswered = false;  // Para controlar si la pregunta ya fue respondida
 
 //Questions and Options array
 
@@ -131,6 +132,7 @@ restart.addEventListener("click", () => {
 nextBtn.addEventListener(
   "click",
   (displayNext = () => {
+    questionAnswered = false; //para evitar el sonido click.mp3 despues de marcar
     //increment questionCount
     questionCount += 1;
     //if last question
@@ -261,6 +263,8 @@ function quizCreator() {
 
 //Checker Function to check if option is correct or not
 function checker(userOption) {
+   // marcar que la pregunta ya ha sido respondida
+   questionAnswered = true;
   let userSolution = userOption.innerText;
   let question = document.getElementsByClassName("container-mid")[questionCount];
   let options = question.querySelectorAll(".option-div");
@@ -357,6 +361,7 @@ function initial() {
   count = 11;
   currentStreak = 0; //reiniciar el contador de racha
   maxStreak = 0; //reiniciar la racha máxima
+  questionAnswered = false; // reinicia la variable de respuesta
   clearInterval(countdown);
   timerDisplay();
   quizCreator();
@@ -414,9 +419,10 @@ function playSound(sound) {
   btn.addEventListener("click", () => playSound(hoverSound)); // Sonido solo al presionar
 });
 
-// Añadir eventos a las opciones de respuesta
 document.addEventListener("mouseover", (event) => {
-  if (event.target.classList.contains("option-div")) {
+  // Solo reproducir el sonido si la pregunta no ha sido respondida
+  if (!questionAnswered && event.target.classList.contains("option-div")) {
     playSound(clickSound);
   }
 });
+
