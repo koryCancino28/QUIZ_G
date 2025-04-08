@@ -423,3 +423,17 @@ button {
   from { transform: scale(1); }
   to { transform: scale(1.02); }
 }
+.option-div.with-image {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding: 10px;
+  min-height: 50px;
+}
+
+.option-div.with-image img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  object-fit: contain;
+}

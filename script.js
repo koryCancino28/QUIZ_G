@@ -70,7 +70,7 @@ const quizArray = [
   {
     id: "6",
     question: "¿Cuál es nuestro producto bandera?",
-    options: ["Jarabes", "Cápsulas", "Gomitas", "Ovulos"],
+    options: ["Jarabes", "Cápsulas", "Gomitas", "Cremas"],
     correct: "Gomitas",
   },
   {
@@ -238,29 +238,55 @@ function quizCreator() {
   quizArray.sort(() => Math.random() - 0.5);
   //generate quiz
   for (let i of quizArray) {
-    //randomly sort options
-    i.options.sort(() => Math.random() - 0.5);
     //quiz card creation
     let div = document.createElement("div");
     div.classList.add("container-mid", "hide");
     //question number
-    countOfQuestion.innerHTML = 1 + " of " + quizArray.length + " Question";
+    countOfQuestion.innerHTML = 1 + " de " + quizArray.length + " preguntas";
     //question
     let question_DIV = document.createElement("p");
     question_DIV.classList.add("question");
     question_DIV.innerHTML = i.question;
     div.appendChild(question_DIV);
-    //options
-    div.innerHTML += `
-    <button class="option-div" onclick="checker(this)">${i.options[0]}</button>
-     <button class="option-div" onclick="checker(this)">${i.options[1]}</button>
-      <button class="option-div" onclick="checker(this)">${i.options[2]}</button>
-       <button class="option-div" onclick="checker(this)">${i.options[3]}</button>
-    `;
+    
+    // Para la pregunta del producto bandera (ID 6)
+    if (i.id === "6") {
+      // Primero creamos un array de objetos con opciones e imágenes correspondientes
+      const opcionesConImagenes = [
+        { texto: "Jarabes", imagen: "jarabe.png" },
+        { texto: "Cápsulas", imagen: "capsula.png" },
+        { texto: "Gomitas", imagen: "gomita.jpeg" },
+        { texto: "Cremas", imagen: "crema.png" }
+      ];
+      
+      // Barajamos este array manteniendo la relación texto-imagen
+      opcionesConImagenes.sort(() => Math.random() - 0.5);
+      
+      // Creamos los botones con las imágenes correspondientes
+      opcionesConImagenes.forEach(opcion => {
+        let button = document.createElement("button");
+        button.className = "option-div with-image";
+        button.innerHTML = `<img src="${opcion.imagen}" alt="${opcion.texto}">${opcion.texto}`;
+        button.onclick = function() { checker(this); };
+        div.appendChild(button);
+      });
+    } else {
+      // Para las demás preguntas, barajamos las opciones normalmente
+      let options = [...i.options]; // Copiamos el array
+      options.sort(() => Math.random() - 0.5); // Barajamos
+      
+      // Creamos los botones sin imágenes
+      options.forEach(opcion => {
+        let button = document.createElement("button");
+        button.className = "option-div";
+        button.textContent = opcion;
+        button.onclick = function() { checker(this); };
+        div.appendChild(button);
+      });
+    }
     quizContainer.appendChild(div);
   }
 }
-
 //Checker Function to check if option is correct or not
 function checker(userOption) {
    // marcar que la pregunta ya ha sido respondida
