@@ -5,7 +5,7 @@
   font-family: "Poppins", sans-serif;
 }
 body {
-  background-image: url('fondo.png'); /* Ruta relativa a la carpeta "fondo" */
+  background-image: url('fondo.jpg'); /* Ruta relativa a la carpeta "fondo" */
   background-size: cover; /* Hace que la imagen cubra todo el fondo */
   background-position: center center; /* Centra la imagen en la pantalla */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -30,7 +30,7 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 3px 6px 20px rgba(0, 0, 0, 0.2);
-  background-color: #ecf6bb; /* Color suave para el fondo */
+  background-color: #ffddbd; /* principal, start */
 }
 
 button {
@@ -75,7 +75,7 @@ button {
   left: 50%;
   border-radius: 0.6em;
   box-shadow: 3px 6px 20px rgba(0, 0, 0, 0.2);
-  background-color: #ecf6bb;
+  background-color:  #ffddbd; /* contenedor preguntas */
 }
 
 .header {
@@ -95,7 +95,7 @@ button {
   align-items: center;
   justify-content: space-between;
   padding: 0.7em 1.8em;
-  background-color: #ff703f; /* Color secundario */
+  background-color: #ff4c4c; /* Color secundario */
 }
 
 .question {
@@ -116,7 +116,7 @@ button {
   text-align: left;
   outline: none;
   background: transparent;
-  border: 1px solid #d2bfbf;
+  border: 1px solid #ec7f7f;
   border-radius: 0.3em;
   transition: all 0.3s ease;
 }
@@ -184,6 +184,7 @@ button {
   align-items: center;
   z-index: 10; /* Asegúrate de que se muestre sobre otros elementos */
   background-color: rgba(218, 143, 143, 0.5); /* Fondo semitransparente */
+  border-radius: 0.6em;
 }
 
 .feedback-container img {
@@ -295,7 +296,7 @@ button {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(to right, #fa2e59, #ff703f); /* Usando tus colores primario y secundario */
+  background: linear-gradient(to right, #fa2e59, #ff7070); /* Usando tus colores primario y secundario */
   border-radius: 10px;
   width: 0%;
   transition: width 0.5s ease;
@@ -367,8 +368,8 @@ button {
   padding: 1em;
   margin: 0.8em auto; /* Centered with auto margins */
   border-radius: 0.6em;
-  background-color: #ecf6bb;
-  border: 2px solid #76bcad;
+  background-color: #ffddbd;
+  border: 3px solid #76bcad;
   box-shadow: 0 4px 8px rgba(118, 188, 173, 0.2);
   line-height: 1.5;
   width: 90%; /* Responsive width */
