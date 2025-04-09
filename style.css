@@ -30,7 +30,7 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 3px 6px 20px rgba(0, 0, 0, 0.2);
-  background-color: #ffddbd; /* principal, start */
+  background-color: #fffdfc; /* principal, start */
 }
 
 button {
@@ -75,7 +75,7 @@ button {
   left: 50%;
   border-radius: 0.6em;
   box-shadow: 3px 6px 20px rgba(0, 0, 0, 0.2);
-  background-color:  #ffddbd; /* contenedor preguntas */
+  background-color: #fffdfc; /* contenedor preguntas */
 }
 
 .header {
@@ -95,7 +95,7 @@ button {
   align-items: center;
   justify-content: space-between;
   padding: 0.7em 1.8em;
-  background-color: #ff4c4c; /* Color secundario */
+  background-color: #fa2e59; /* Color secundario */
 }
 
 .question {
@@ -213,6 +213,14 @@ button {
 @media (max-width: 768px) {
   .feedback-container img {
     width: 70%;  /* En pantallas más pequeñas, hacemos la imagen más grande (80%) */
+  }
+}
+@media (max-width: 2160px) {
+  .feedback-container img {
+    width: 85%;  /* En pantallas más GRANDES, hacemos la imagen más grande (80%) */
+  }
+  .logo-morado{
+    width: 40%; /* CAMBIAR SI AL HACER ZOOM SE HACE MAS GRANDE*/
   }
 }
 
@@ -368,7 +376,7 @@ button {
   padding: 1em;
   margin: 0.8em auto; /* Centered with auto margins */
   border-radius: 0.6em;
-  background-color: #ffddbd;
+  background-color: #fffdfc;
   border: 3px solid #76bcad;
   box-shadow: 0 4px 8px rgba(118, 188, 173, 0.2);
   line-height: 1.5;
