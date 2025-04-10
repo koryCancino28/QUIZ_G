@@ -128,16 +128,16 @@ restart.addEventListener("click", () => {
   updateProgress();
 });
 
-//Next Button
+//Boton Siguiente 
 nextBtn.addEventListener(
   "click",
   (displayNext = () => {
     questionAnswered = false; //para evitar el sonido click.mp3 despues de marcar
-    //increment questionCount
+    //incrementar número de preguntas
     questionCount += 1;
-    //if last question
+    //si la última pregunta
     if (questionCount == quizArray.length) {
-      //hide question container and display score
+      //ocultar el contenedor de preguntas y mostrar la puntuacion
       displayContainer.classList.add("hide");
       scoreContainer.classList.remove("hide");
       // Detener el temporizador y su sonido
@@ -168,10 +168,10 @@ nextBtn.addEventListener(
       }
       
     } else {
-      //display questionCount
+      //mostrar número de preguntas 
       countOfQuestion.innerHTML =
         questionCount + 1 + " de " + quizArray.length + " preguntas ";
-      //display quiz
+      //mostrar quiz
       quizDisplay(questionCount);
       count = 11;
       clearInterval(countdown);
@@ -185,7 +185,7 @@ nextBtn.addEventListener(
  let timerSound = new Audio("temporizador.mp3");
  timerSound.play();
 
-//Timer
+//minutero
 const timerDisplay = () => {
   // Detener cualquier sonido de temporizador previo
   if (timerSound) {
@@ -221,29 +221,29 @@ const timerDisplay = () => {
   }, 1000);
 };
 
-//Display quiz
+//Mostrar quiz
 const quizDisplay = (questionCount) => {
   let quizCards = document.querySelectorAll(".container-mid");
-  //Hide other cards
+  //ocultar otros contenedores
   quizCards.forEach((card) => {
     card.classList.add("hide");
   });
-  //display current question card
+  //Mostrar el contenedor de preguntas actual
   quizCards[questionCount].classList.remove("hide");
 };
 
-//Quiz Creation
+//creación quiz
 function quizCreator() {
-  //randomly sort questions
+//ordenar preguntas aleatoriamente 
   quizArray.sort(() => Math.random() - 0.5);
-  //generate quiz
+  //generar quiz
   for (let i of quizArray) {
-    //quiz card creation
+    //quiz card creacion
     let div = document.createElement("div");
     div.classList.add("container-mid", "hide");
-    //question number
+    //número de pregunta
     countOfQuestion.innerHTML = 1 + " de " + quizArray.length + " preguntas";
-    //question
+    //pregunta
     let question_DIV = document.createElement("p");
     question_DIV.classList.add("question");
     question_DIV.innerHTML = i.question;
@@ -287,7 +287,7 @@ function quizCreator() {
     quizContainer.appendChild(div);
   }
 }
-//Checker Function to check if option is correct or not
+//funci+on checker para comprobar si la opción es correcta o no
 function checker(userOption) {
    // marcar que la pregunta ya ha sido respondida
    questionAnswered = true;
@@ -404,7 +404,7 @@ function updateProgress() {
 }
 
 
-//when user click on start button
+//cuando el usuario hace click en el boton de incio
 startButton.addEventListener("click", () => {
   if (soundsEnabled) {
     let sound = new Audio("hover.mp3");
@@ -416,7 +416,7 @@ startButton.addEventListener("click", () => {
   updateProgress();
 });
 
-//hide quiz and display start screen
+//ocultar el cuestionario y solo mostrar la pantalla de inicio
 window.onload = () => {
   startScreen.classList.remove("hide");
   displayContainer.classList.add("hide");
