@@ -58,7 +58,7 @@ const quizArray = [
   },
   {
     id: "5",
-    question: "¿Cuál es la Primera Botica en desarrollar Fórmulas Magistrales en el Perú?",
+    question: "¿Cuál es la Primera Botica en desarrollar Fórmulas Magistrales Pediátricas en el Perú?",
     options: [
       "GROBDI",
       "GRODBI",
@@ -88,7 +88,7 @@ const quizArray = [
       "6 Meses",
       "1 mes",
     ],
-    correct: "1 año",
+    correct: "6 Meses",
   },
 ];
 // volver al inicio
