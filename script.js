@@ -12,7 +12,7 @@ let startScreen = document.querySelector(".start-screen");
 let startButton = document.getElementById("start-button");
 let questionCount;
 let scoreCount = 0;
-let count = 11; //EL INTERVALO DE TIEMPO, CAMBIAR EN LOS OTROS COUNT
+let count = 16; //EL INTERVALO DE TIEMPO, CAMBIAR EN LOS OTROS COUNT
 let countdown;
 let progressBar = document.querySelector(".progress-bar");
 let streakCounter = document.querySelector(".streak-counter");
@@ -53,8 +53,8 @@ const quizArray = [
   {
     id: "4",
     question: "¿Qué factores te generan más confianza al elegir un laboratorio de Fórmulas Magistrales?",
-    options: ["Precisión", "Investigación y desarrollo", "Automatización", "T.A"],
-    correct: "T.A",
+    options: ["Precisión", "Investigación y desarrollo", "Automatización", "Todas las anteriores"],
+    correct: "Todas las anteriores",
   },
   {
     id: "5",
@@ -112,7 +112,7 @@ participante.addEventListener("click", () => {
   // Reiniciar el estado del quiz (sin iniciar el temporizador)
   questionCount = 0;
   scoreCount = 0;
-  count = 11;
+  count = 16;
   currentStreak = 0;
   maxStreak = 0;
   timeLeft.innerHTML = ""; // Limpiar el texto del temporizador
@@ -173,7 +173,7 @@ nextBtn.addEventListener(
         questionCount + 1 + " de " + quizArray.length + " preguntas ";
       //mostrar quiz
       quizDisplay(questionCount);
-      count = 11;
+      count = 16;
       clearInterval(countdown);
       timerDisplay();
       updateProgress();
@@ -384,7 +384,7 @@ function initial() {
   quizContainer.innerHTML = "";
   questionCount = 0;
   scoreCount = 0;
-  count = 11;
+  count = 16;
   currentStreak = 0; //reiniciar el contador de racha
   maxStreak = 0; //reiniciar la racha máxima
   questionAnswered = false; // reinicia la variable de respuesta
